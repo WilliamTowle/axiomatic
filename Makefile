@@ -19,9 +19,25 @@ default: help
 ## Configuration
 
 TOPLEV=${CURDIR}
+export DOWNLOAD_DIR?=${TOPLEV}/downloads
+export STAGING_DIR?=${TOPLEV}/staging
+export GRUBISO_STAGING_DIR?=${STAGING_DIR}/grubiso
+export LIVESFS_STAGING_DIR?=${STAGING_DIR}/livesfs
 
-DOWNLOAD_DIR?=${TOPLEV}/downloads
-STAGING_DIR?=${TOPLEV}/staging
+export MEDIA_TYPE?=livesfs
+#export MEDIA_TYPE?=grubiso
+
+export IMAGE_NAME?=${STAGING_DIR}/${MEDIA_TYPE}.img
+export IMAGE_SIZE?=$(shell echo "$$(( 0x80000000 ))")
+
+export OS_DISTRIBUTION?=debian
+export OS_TEMPDIR?=${STAGING_DIR}/${OS_DISTRIBUTION}-rootfs
+
+DOWNLOAD_TARGETS:=
+
+
+include build-media/common.mk
+include build-os/common.mk
 
 
 ## Build rules
@@ -35,18 +51,31 @@ help:
 		"'clean' target removes the staging tree" \
 		"'distclean' target cleans staging and download trees"
 
-
 #
 
 ${DOWNLOAD_DIR}: ; @mkdir -p $@
 
 ${STAGING_DIR}: ; @mkdir -p $@
 
+${OS_TEMPDIR}: ; @mkdir -p $@
+
+#
+
+.PHONY: download-file
+download-file:
+	[ -r ${DESTFILE} ] || wget ${URL} -O ${DESTFILE}
+
 
 #
 
 .PHONY: all
-all: | ${DOWNLOAD_DIR} ${STAGING_DIR}
+all: | ${DOWNLOAD_DIR} ${STAGING_DIR} ${OS_TEMPDIR}
+ifneq (${DOWNLOAD_TARGETS},)
+	make ${DOWNLOAD_TARGETS}
+endif
+	make media-prepare
+	make os-init
+	make media-deploy
 
 #
 
