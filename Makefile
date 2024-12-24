@@ -24,6 +24,8 @@ export STAGING_DIR?=${TOPLEV}/staging
 export GRUBISO_STAGING_DIR?=${STAGING_DIR}/grubiso
 export LIVESFS_STAGING_DIR?=${STAGING_DIR}/livesfs
 
+#export MEDIA_TYPE?=biosefi
+#export MEDIA_TYPE?=gptimg
 export MEDIA_TYPE?=livesfs
 #export MEDIA_TYPE?=grubiso
 
