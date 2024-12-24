@@ -34,6 +34,7 @@ export IMAGE_NAME?=${STAGING_DIR}/${MEDIA_TYPE}.img
 export IMAGE_SIZE?=$(shell echo "$$(( 0x78000000 ))")
 
 export OS_DISTRIBUTION?=debian
+#export OS_DISTRIBUTION?=ubuntu
 export OS_TEMPDIR?=${STAGING_DIR}/${OS_DISTRIBUTION}-rootfs
 
 

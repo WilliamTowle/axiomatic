@@ -61,6 +61,30 @@ ${DEVUAN_KEYRING_PACKAGE}:
 	make download-file URL=${DEVUAN_KEYRING_URL} DESTFILE=$@
 endif	## OS_DISTRIBUTION=devuan
 
+ifeq (${OS_DISTRIBUTION},ubuntu)
+# NB. Ubuntu drops i386 support from Eoan Ermine (v19.10)
+export OS_SUITE?=bionic
+export OS_MIRROR?=http://archive.ubuntu.com/ubuntu/
+
+UBUNTU_DEBOOTSTRAP_VER=1.0.137ubuntu3
+UBUNTU_DEBOOTSTRAP_TARBALL=${DOWNLOAD_DIR}/debootstrap_${UBUNTU_DEBOOTSTRAP_VER}.tar.gz
+UBUNTU_DEBOOTSTRAP_URL=http://ports.ubuntu.com/ubuntu-ports/pool/main/d/debootstrap/$(notdir ${UBUNTU_DEBOOTSTRAP_TARBALL})
+
+UBUNTU_KEYRING_VER=2020.02.11.4
+UBUNTU_KEYRING_PACKAGE=${DOWNLOAD_DIR}/ubuntu-keyring-udeb_${UBUNTU_KEYRING_VER}_all.udeb
+UBUNTU_KEYRING_URL=http://archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/$(notdir ${UBUNTU_KEYRING_PACKAGE})
+
+
+DOWNLOAD_TARGETS+= ${UBUNTU_DEBOOTSTRAP_TARBALL}
+DOWNLOAD_TARGETS+= ${UBUNTU_KEYRING_PACKAGE}
+
+${UBUNTU_DEBOOTSTRAP_TARBALL}:
+	make download-file URL=${UBUNTU_DEBOOTSTRAP_URL} DESTFILE=$@
+
+${UBUNTU_KEYRING_PACKAGE}:
+	make download-file URL=${UBUNTU_KEYRING_URL} DESTFILE=$@
+endif	## OS_DISTRIBUTION=ubuntu
+
 
 .PHONY: os-init os-build
 
@@ -74,6 +98,16 @@ ifeq (${OS_DISTRIBUTION},devuan)
 	mkdir -p ${STAGING_DIR}/debootstrap-devuan
 	[ -r ${STAGING_DIR}/debootstrap-devuan/debootstrap ] || ( cd ${STAGING_DIR}/debootstrap-devuan && tar xvzf ${DEVUAN_DEBOOTSTRAP_TARBALL} --strip-components=1 )
 	[ -r ${STAGING_DIR}/debootstrap-devuan/usr/share/keyrings/devuan-archive-keyring.gpg ] || ( cd ${STAGING_DIR}/debootstrap-devuan && dpkg -x ${DEVUAN_KEYRING_PACKAGE} ./ )
+endif
+ifeq (${OS_DISTRIBUTION},ubuntu)
+	mkdir -p ${STAGING_DIR}/debootstrap-ubuntu
+	[ -r ${STAGING_DIR}/debootstrap-ubuntu/debootstrap ] || ( cd ${STAGING_DIR}/debootstrap-ubuntu && tar xvzf ${UBUNTU_DEBOOTSTRAP_TARBALL} --strip-components=1 && chmod a+x debootstrap )
+	[ -r ${STAGING_DIR}/debootstrap-ubuntu/usr/share/keyrings/ubuntu-archive-keyring.gpg ] || ( cd ${STAGING_DIR}/debootstrap-ubuntu && dpkg -x ${UBUNTU_KEYRING_PACKAGE} ./ )
+endif
+ifeq (${OS_DISTRIBUTION},ubuntu)
+	mkdir -p ${STAGING_DIR}/debootstrap-ubuntu
+	[ -r ${STAGING_DIR}/debootstrap-ubuntu/debootstrap ] || ( cd ${STAGING_DIR}/debootstrap-ubuntu && tar xvzf ${UBUNTU_DEBOOTSTRAP_TARBALL} --strip-components=1 && chmod a+x debootstrap )
+	[ -r ${STAGING_DIR}/debootstrap-ubuntu/usr/share/keyrings/ubuntu-archive-keyring.gpg ] || ( cd ${STAGING_DIR}/debootstrap-ubuntu && dpkg -x ${UBUNTU_KEYRING_PACKAGE} ./ )
 endif
 	sh ./build-os/${OS_DISTRIBUTION}-init.sh ${OS_TEMPDIR} ${OS_SUITE} ${OS_MIRROR} ${OS_ARCH}
 
