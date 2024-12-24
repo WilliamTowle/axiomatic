@@ -2,6 +2,8 @@
 
 .PHONY: media-prepare media-deploy
 
+#MEDIA_TYPE?=biosefi
+#MEDIA_TYPE?=gptimg
 MEDIA_TYPE?=livesfs
 
 media-prepare:
