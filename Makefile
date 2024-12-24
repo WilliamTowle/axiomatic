@@ -30,6 +30,7 @@ export MEDIA_TYPE?=livesfs
 #export MEDIA_TYPE?=grubiso
 
 export OS_DISTRIBUTION?=debian
+#export OS_DISTRIBUTION?=ubuntu
 export OS_TEMPDIR?=${STAGING_DIR}/${OS_DISTRIBUTION}-rootfs
 
 export IMAGE_NAME?=${STAGING_DIR}/${OS_DISTRIBUTION}-${MEDIA_TYPE}.img
