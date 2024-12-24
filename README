@@ -6,7 +6,9 @@ Overview
 
   'Axiomatic' creates basic Debian-family live system images.
 
-  To build, simply invoke 'make'.
+  To build, simply invoke 'make'. Output files will be arranged in
+the staging tree -a directory named 'staging' by default- according to
+build configuration.
 
 
 About
