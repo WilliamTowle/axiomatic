@@ -1,0 +1,24 @@
+AXIOMATIC
+=========
+
+Overview
+--------
+
+  'Axiomatic' creates basic Debian-family live system images.
+
+  To build, simply invoke 'make'.
+
+
+About
+-----
+
+  The top level Makefile contains variables which specify the default
+configuration but can be overridden to tailor the build. Key settings
+are OS_DISTRIBUTION, OS_SUITE, OS_ARCH, and MEDIA_TYPE. For example,
+a Devuan live system for i386 can be built with:
+
+	make OS_DISTRIBUTION=devuan OS_SUITE=daedalus OS_ARCH=i386 MEDIA_TYPE=livesfs
+
+and a Debian ISO with:
+
+	make OS_DISTRIBUTION=debian MEDIA_TYPE=grubiso
