@@ -63,16 +63,23 @@ ${OS_TEMPDIR}: ; @mkdir -p $@
 
 .PHONY: download-file
 download-file:
-	[ -r ${DESTFILE} ] || wget ${URL} -O ${DESTFILE}
+	wget --spider ${URL} && wget ${URL} -O ${DESTFILE}
+
+
+#
+
+.PHONY: downloads
+downloads: | ${DOWNLOAD_DIR}
+ifneq (${DOWNLOAD_TARGETS},)
+	make ${DOWNLOAD_TARGETS}
+endif
 
 
 #
 
 .PHONY: all
-all: | ${DOWNLOAD_DIR} ${STAGING_DIR} ${OS_TEMPDIR}
-ifneq (${DOWNLOAD_TARGETS},)
-	make ${DOWNLOAD_TARGETS}
-endif
+all: | ${STAGING_DIR} ${OS_TEMPDIR}
+	make downloads
 	make media-prepare
 	make os-init
 	make media-deploy
