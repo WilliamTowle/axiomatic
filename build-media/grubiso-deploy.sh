@@ -46,6 +46,6 @@ __EOF
 
 
 # builds as regular user might want -all-root here?
-mksquashfs ${GRUBISO_STAGING_DIR}/grubiso-sfsroot ${GRUBISO_STAGING_DIR}/iso-content/boot/${OS_DISTRIBUTION}.squashfs -e boot -nopad
+mksquashfs ${GRUBISO_STAGING_DIR}/grubiso-sfsroot ${GRUBISO_STAGING_DIR}/iso-content/boot/${OS_DISTRIBUTION}.squashfs -e boot -nopad -noappend
 
 grub-mkrescue --verbose -o ${STAGING_DIR}/${OS_DISTRIBUTION}-rescue.iso ${GRUBISO_STAGING_DIR}/iso-content
