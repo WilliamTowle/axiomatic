@@ -48,13 +48,16 @@ download-file:
 	[ -r ${DESTFILE} ] || wget ${URL} -O ${DESTFILE}
 
 
-
-.PHONY: all
-all:
+.PHONY: downloads
+downloads:
 ifneq (${DOWNLOAD_TARGETS},)
 	mkdir -p ${DOWNLOAD_DIR}
 	make ${DOWNLOAD_TARGETS}
 endif
+
+
+.PHONY: all
+all: downloads
 	mkdir -p ${STAGING_DIR}
 	make media-prepare
 	mkdir -p ${OS_TEMPDIR}
