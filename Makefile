@@ -55,17 +55,25 @@ include build-os/common.mk
 
 .PHONY: download-file
 download-file:
-	[ -r ${DESTFILE} ] || wget ${URL} -O ${DESTFILE}
+	wget --spider ${URL} && wget ${URL} -O ${DESTFILE}
 
 
-
-.PHONY: all
-all:
+.PHONY: downloads
+downloads:
 ifneq (${DOWNLOAD_TARGETS},)
 	mkdir -p ${DOWNLOAD_DIR}
 	make ${DOWNLOAD_TARGETS}
 endif
+
 ##
+
+.PHONY: all
+all: downloads
+	mkdir -p ${STAGING_DIR}
+	make media-prepare
+	mkdir -p ${OS_TEMPDIR}
+	sudo env ${SU_ENV} make os-init media-deploy
+
 
 .PHONY: help
 help:
@@ -75,10 +83,6 @@ help:
 		"'make' builds ${MEDIA_TYPE} type image for ${OS_DISTRIBUTION}" \
 		"'clean' removes the staging tree" \
 		"'distclean' cleans staging and download trees"
-	mkdir -p ${STAGING_DIR}
-	make media-prepare
-	mkdir -p ${OS_TEMPDIR}
-	sudo env ${SU_ENV} make os-init media-deploy
 
 
 .PHONY: clean
