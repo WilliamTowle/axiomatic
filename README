@@ -24,3 +24,10 @@ a Devuan live system for i386 can be built with:
 and a Debian ISO with:
 
 	make OS_DISTRIBUTION=debian MEDIA_TYPE=grubiso
+
+
+  Axiomatic has a baseline requirement of make, with wget and sudo
+for downloading and running debootstrap. The live-squashfs and
+GrUB ISO builds need squashfs-tools for making filesystems, with
+the latter also needing grub-common, grub-pc-bin,
+grub-efi-amd64-bin, mtools, and xorriso.
