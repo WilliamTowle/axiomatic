@@ -64,7 +64,7 @@ endif
 
 .PHONY: clean
 clean:
-	-[ "${STAGING_DIR}" ] && rm -rf ${STAGING_DIR}
+	-[ "${STAGING_DIR}" ] && { rm -rf ${STAGING_DIR} || sudo rm -rf ${STAGING_DIR} ; }
 
 .PHONY: distclean
 distclean: clean
