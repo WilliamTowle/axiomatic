@@ -47,7 +47,7 @@ help:
 	@printf '%s: %s\n' \
 		$(firstword ${MAKEFILE_LIST})
 	@printf '\t%s\n' \
-		"'all' target builds image for ${OS_DISTRIBUTION}" \
+		"'all' target builds ${MEDIA_TYPE} type image for ${OS_DISTRIBUTION}" \
 		"'clean' target removes the staging tree" \
 		"'distclean' target cleans staging and download trees"
 
