@@ -48,7 +48,7 @@ include build-os/common.mk
 
 .PHONY: download-file
 download-file:
-	[ -r ${DESTFILE} ] || wget ${URL} -O ${DESTFILE}
+	wget --spider ${URL} && wget ${URL} -O ${DESTFILE}
 
 
 .PHONY: downloads
