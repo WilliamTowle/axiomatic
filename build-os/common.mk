@@ -8,10 +8,9 @@ ifeq (${OS_DISTRIBUTION},debian)
 export OS_SUITE?=bookworm
 export OS_MIRROR?=http://ftp.uk.debian.org/debian/
 
-#DEBIAN_DEBOOTSTRAP_VER=1.0.137
-DEBIAN_DEBOOTSTRAP_VER=1.0.138
+DEBIAN_DEBOOTSTRAP_VER=1.0.124
 DEBIAN_DEBOOTSTRAP_TARBALL=${DOWNLOAD_DIR}/debootstrap_${DEBIAN_DEBOOTSTRAP_VER}.tar.gz
-DEBIAN_DEBOOTSTRAP_URL=http://ftp.uk.debian.org/debian/pool/main/d/debootstrap/$(notdir ${DEBIAN_DEBOOTSTRAP_TARBALL})
+DEBIAN_DEBOOTSTRAP_URL=https://snapshot.debian.org/archive/debian/20210814T212851Z/pool/main/d/debootstrap/$(notdir ${DEBIAN_DEBOOTSTRAP_TARBALL})
 
 DEBIAN_KEYRING_VER=2023.4
 DEBIAN_KEYRING_PACKAGE=${DOWNLOAD_DIR}/debian-archive-keyring_${DEBIAN_KEYRING_VER}_all.deb
