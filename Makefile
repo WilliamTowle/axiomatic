@@ -65,6 +65,16 @@ ifneq (${DOWNLOAD_TARGETS},)
 	mkdir -p ${DOWNLOAD_DIR}
 	make ${DOWNLOAD_TARGETS}
 endif
+##
+
+.PHONY: help
+help:
+	@printf '%s: %s\n' \
+		$(firstword ${MAKEFILE_LIST})
+	@printf '\t%s\n' \
+		"'make' builds ${MEDIA_TYPE} type image for ${OS_DISTRIBUTION}" \
+		"'clean' removes the staging tree" \
+		"'distclean' cleans staging and download trees"
 	mkdir -p ${STAGING_DIR}
 	make media-prepare
 	mkdir -p ${OS_TEMPDIR}
