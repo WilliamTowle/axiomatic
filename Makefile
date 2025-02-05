@@ -19,21 +19,31 @@ default: all
 # Configuration
 
 TOPLEV=${CURDIR}
+SU_ENV=
+
 export DOWNLOAD_DIR?=${TOPLEV}/downloads
+SU_ENV+=DOWNLOAD_DIR=${DOWNLOAD_DIR}
 export STAGING_DIR?=${TOPLEV}/staging
+SU_ENV+= STAGING_DIR=${STAGING_DIR}
 export GRUBISO_STAGING_DIR?=${STAGING_DIR}/grubiso
+SU_ENV+= GRUBISO_STAGING_DIR=${GRUBISO_STAGING_DIR}
 export LIVESFS_STAGING_DIR?=${STAGING_DIR}/livesfs
+SU_ENV+= LIVESFS_STAGING_DIR=${LIVESFS_STAGING_DIR}
 
 export MEDIA_TYPE?=livesfs
 #export MEDIA_TYPE?=grubiso
+SU_ENV+= MEDIA_TYPE=grubiso
 
 export IMAGE_NAME?=${STAGING_DIR}/${MEDIA_TYPE}.img
+SU_ENV+= IMAGE_NAME=${IMAGE_NAME}
 #export IMAGE_SIZE?=$(shell echo "$$(( 0x76d00000 ))")
 export IMAGE_SIZE?=$(shell echo "$$(( 0x78000000 ))")
+SU_ENV+= IMAGE_SIZE=${IMAGE_SIZE}
 
 export OS_DISTRIBUTION?=debian
+SU_ENV+= OS_DISTRIBUTION=${OS_DISTRIBUTION}
 export OS_TEMPDIR?=${STAGING_DIR}/${OS_DISTRIBUTION}-rootfs
-
+SU_ENV+= OS_TEMPDIR=${OS_TEMPDIR}
 
 ##
 
@@ -58,8 +68,7 @@ endif
 	mkdir -p ${STAGING_DIR}
 	make media-prepare
 	mkdir -p ${OS_TEMPDIR}
-	make os-init
-	make media-deploy
+	sudo env ${SU_ENV} make os-init media-deploy
 
 
 .PHONY: clean
