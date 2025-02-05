@@ -64,6 +64,8 @@ endif	## OS_DISTRIBUTION=devuan
 .PHONY: os-init os-build
 
 os-init:
+	@printf '%s: Reached '%s' at %s\n' \
+		$(firstword ${MAKEFILE_LIST}) $@ "`date '+%F %T'`"
 ifeq (${OS_DISTRIBUTION},debian)
 	mkdir -p ${STAGING_DIR}/debootstrap-debian
 	[ -r ${STAGING_DIR}/debootstrap-debian/debootstrap ] || ( cd ${STAGING_DIR}/debootstrap-debian && tar xvzf ${DEBIAN_DEBOOTSTRAP_TARBALL} --strip-components=1 )
@@ -77,4 +79,6 @@ endif
 	sh ./build-os/${OS_DISTRIBUTION}-init.sh ${OS_TEMPDIR} ${OS_SUITE} ${OS_MIRROR} ${OS_ARCH}
 
 os-build:
+	@printf '%s: Reached '%s' at %s\n' \
+		$(firstword ${MAKEFILE_LIST}) $@ "`date '+%F %T'`"
 	[ "${OS_DESTDIR}" ] && ./build-os/${OS_DISTRIBUTION}-build.sh ${OS_DESTDIR}
