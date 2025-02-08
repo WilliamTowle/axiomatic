@@ -11,6 +11,16 @@ fi
 
 set -e
 
+case ${OS_SUITE} in
+daedalus)
+	KERNEL_PACKAGE=linux-image-$(echo ${OS_ARCH} | sed 's/i386/686-pae/')
+	;;
+excalibur|*)
+	KERNEL_PACKAGE=linux-image-$(echo ${OS_ARCH} | sed 's/i386/UNSUPPORTED/')
+	;;
+esac
+
+
 grep '^guest:' ${OS_ROOTDIR}/etc/passwd \
 	|| { sudo /usr/sbin/chroot ${OS_ROOTDIR} /bin/bash -x <<__EOF
 apt update
@@ -20,7 +30,7 @@ apt update
 # TODO: tzdata, locales, keyboard-configuration useful (...w/ defaults)
 # TODO: efibootmgr desirable for amd64 platforms
 apt-get install --no-install-recommends -y -q \
-	linux-image-$(echo ${OS_ARCH} | sed 's/i386/686-pae/') sysvinit-core \
+	${KERNEL_PACKAGE} sysvinit-core \
 	live-boot live-config \
 	\
 	debootstrap dosfstools fdisk \
