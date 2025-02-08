@@ -35,17 +35,18 @@ export OS_MIRROR?=http://deb.devuan.org/merged
 #DEVUAN_DEBOOTSTRAP_VER=1.0.114+devuan5
 #DEVUAN_DEBOOTSTRAP_VER=1.0.123+devuan5
 #DEVUAN_DEBOOTSTRAP_VER=1.0.134devuan2
-DEVUAN_DEBOOTSTRAP_VER=1.0.138devuan1
+#DEVUAN_DEBOOTSTRAP_VER=1.0.138devuan1
+DEVUAN_DEBOOTSTRAP_VER=1.0.140devuan1
 DEVUAN_DEBOOTSTRAP_TARBALL=${DOWNLOAD_DIR}/debootstrap_${DEVUAN_DEBOOTSTRAP_VER}.tar.gz
-DEVUAN_DEBOOTSTRAP_URL=http://deb.devuan.org/devuan/pool/main/d/debootstrap/$(notdir ${DEVUAN_DEBOOTSTRAP_TARBALL})
+DEVUAN_DEBOOTSTRAP_URL=https://pkgmaster.devuan.org/devuan/pool/main/d/debootstrap/$(notdir ${DEVUAN_DEBOOTSTRAP_TARBALL})
 
 #DEVUAN_KEYRING_VER=2022.09.04
 DEVUAN_KEYRING_VER=2023.10.07
 #DEVUAN_KEYRING_PACKAGE=${DOWNLOAD_DIR}/devuan-keyring_${DEVUAN_KEYRING_VER}_all.deb
 DEVUAN_KEYRING_PACKAGE=${DOWNLOAD_DIR}/devuan-keyring-udeb_${DEVUAN_KEYRING_VER}_all.udeb
 #DEVUAN_KEYRING_TARBALL=${DOWNLOAD_DIR}/devuan-keyring_${DEVUAN_KEYRING_VER}.tar.xz
-DEVUAN_KEYRING_URL=http://deb.devuan.org/devuan/pool/main/d/devuan-keyring/$(notdir ${DEVUAN_KEYRING_PACKAGE})
-#DEVUAN_KEYRING_URL=http://deb.devuan.org/devuan/pool/main/d/devuan-keyring/$(notdir ${DEVUAN_KEYRING_TARBALL})
+DEVUAN_KEYRING_URL=https://pkgmaster.devuan.org/devuan/pool/main/d/devuan-keyring/$(notdir ${DEVUAN_KEYRING_PACKAGE})
+#DEVUAN_KEYRING_URL=https://pkgmaster.devuan.org/devuan/pool/main/d/devuan-keyring/$(notdir ${DEVUAN_KEYRING_TARBALL})
 
 
 DOWNLOAD_TARGETS+= ${DEVUAN_DEBOOTSTRAP_TARBALL}
