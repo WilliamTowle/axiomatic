@@ -22,10 +22,12 @@ set -e
 
 [ "${LIVESFS_STAGING_DIR}" ] || LIVESFS_STAGING_DIR=${PWD}/`basename $0`.d
 
-mkdir -p ${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}-sfsroot
-cp -ar ${OS_TEMPDIR}/* ${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}-sfsroot/
+[ -d ${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}-sfsroot ] || {
+	mkdir -p ${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}-sfsroot
+	sudo cp -ar ${OS_TEMPDIR}/* ${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}-sfsroot/
 
-make -f Makefile os-build OS_DESTDIR=${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}-sfsroot
+	make -f Makefile os-build OS_DESTDIR=${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}-sfsroot
+}
 
 
 # Copy files (only - not /boot/grub, if present):
