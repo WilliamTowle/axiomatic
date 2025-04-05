@@ -66,9 +66,9 @@ set -e
 	cd ${OS_TEMPDIR}
 
 	printf '%s: %s\n' $0 'Configuring /etc/hostname' &&
-	printf '%s\n' "${HOSTNAME}" | tee etc/hostname &&
+	printf '%s\n' "${HOSTNAME}" | sudo tee etc/hostname &&
 	printf '%s: %s\n' $0 'Configuring /etc/hosts' &&
-	sed "s/_HOSTNAME_/${HOSTNAME}/g" <<__EOH | tee etc/hosts
+	sed "s/_HOSTNAME_/${HOSTNAME}/g" <<__EOH | sudo tee etc/hosts
 127.0.0.1	localhost _HOSTNAME_
 127.0.1.1	_HOSTNAME_.localdomain.localnet _HOSTNAME_.localdomain
 
