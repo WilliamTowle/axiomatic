@@ -11,7 +11,8 @@ fi
 
 set -e
 
-sudo /usr/sbin/chroot ${OS_ROOTDIR} /bin/bash -x <<__EOF
+grep '^guest:' ${OS_ROOTDIR}/etc/passwd \
+	|| { sudo /usr/sbin/chroot ${OS_ROOTDIR} /bin/bash -x <<__EOF
 apt update
 
 # FIXME: kernel and/or live-{boot|config} may be specific to media type
@@ -34,3 +35,4 @@ useradd -u 1000 -g guest -m guest -s /bin/bash
 chpasswd <<< 'guest:guest'
 usermod -a -G sudo guest
 __EOF
+}
