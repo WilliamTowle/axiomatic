@@ -53,6 +53,7 @@ all: | ${DOWNLOAD_DIR} ${STAGING_DIR}
 .PHONY: clean
 clean:
 	[ ! -d "${STAGING_DIR}" ] || sudo rm -rf "${STAGING_DIR}"
+	-rm -rf wget-log*
 
 .PHONY: distclean
 distclean: clean
