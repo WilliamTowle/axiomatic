@@ -34,5 +34,4 @@ set -e
 find ${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}-sfsroot/boot/ -maxdepth 1 -type f -exec cp '{}' ${LIVESFS_STAGING_DIR} \;
 
 
-# builds as regular user might want -all-root here?
-mksquashfs ${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}-sfsroot ${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}.squashfs -e boot -nopad
+sudo mksquashfs ${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}-sfsroot ${LIVESFS_STAGING_DIR}/${OS_DISTRIBUTION}.squashfs -e boot -nopad -noappend
