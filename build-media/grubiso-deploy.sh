@@ -23,7 +23,7 @@ set -e
 [ "${GRUBISO_STAGING_DIR}" ] || GRUBISO_STAGING_DIR=${PWD}/`basename $0`.d
 
 mkdir -p ${GRUBISO_STAGING_DIR}/grubiso-sfsroot
-cp -ar ${OS_TEMPDIR}/* ${GRUBISO_STAGING_DIR}/grubiso-sfsroot/
+sudo cp -ar ${OS_TEMPDIR}/* ${GRUBISO_STAGING_DIR}/grubiso-sfsroot/
 
 make -f Makefile os-build OS_DESTDIR=${GRUBISO_STAGING_DIR}/grubiso-sfsroot
 
@@ -46,6 +46,6 @@ __EOF
 
 
 # builds as regular user might want -all-root here?
-mksquashfs ${GRUBISO_STAGING_DIR}/grubiso-sfsroot ${GRUBISO_STAGING_DIR}/iso-content/boot/${OS_DISTRIBUTION}.squashfs -e boot -nopad -noappend
+sudo mksquashfs ${GRUBISO_STAGING_DIR}/grubiso-sfsroot ${GRUBISO_STAGING_DIR}/iso-content/boot/${OS_DISTRIBUTION}.squashfs -e boot -nopad -noappend
 
 grub-mkrescue --verbose -o ${STAGING_DIR}/${OS_DISTRIBUTION}-rescue.iso ${GRUBISO_STAGING_DIR}/iso-content
