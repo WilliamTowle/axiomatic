@@ -24,3 +24,23 @@ a Devuan live system for i386 can be built with:
 and a Debian ISO with:
 
 	make OS_DISTRIBUTION=debian MEDIA_TYPE=grubiso
+
+  Dependencies on external tools vary according to the desired
+MEDIA_TYPE, eg. parted for partitioning, squashfs-tools for
+generating filesystems, and grub-mkimage for bootloader installation.
+
+
+Testing
+-------
+
+  Suitable command lines for QEmu involve specifying the boot media
+and a suitable amount of memory for decompression of the kernel and
+initrd/rootfs.
+
+  A 32-bit PC booting from hard disk might require:
+
+	qemu-system-i386 -m 1024 -drive file=debian-gptimg.img,media=disk,format=raw -device VGA,edid=on,xres=800,yres=480
+
+  A 64-bit PC booting from ISO image might require:
+
+	qemu-system-x86_64 -m 1024 -bios /usr/share/qemu/OVMF.fd -drive file=debian-rescue.iso,id=iso0,media=cdrom,format=raw -device VGA,edid=on,xres=800,yres=480
