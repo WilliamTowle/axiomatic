@@ -27,11 +27,12 @@ export LIVESFS_STAGING_DIR?=${STAGING_DIR}/livesfs
 export MEDIA_TYPE?=livesfs
 #export MEDIA_TYPE?=grubiso
 
-export IMAGE_NAME?=${STAGING_DIR}/${MEDIA_TYPE}.img
-export IMAGE_SIZE?=$(shell echo "$$(( 0x80000000 ))")
-
 export OS_DISTRIBUTION?=debian
 export OS_TEMPDIR?=${STAGING_DIR}/${OS_DISTRIBUTION}-rootfs
+
+export IMAGE_NAME?=${STAGING_DIR}/${OS_DISTRIBUTION}-${MEDIA_TYPE}.img
+export IMAGE_SIZE?=$(shell echo "$$(( 0x80000000 ))")
+
 
 DOWNLOAD_TARGETS:=
 
