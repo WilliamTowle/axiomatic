@@ -53,7 +53,7 @@ sudo grub-mkimage --format=x86_64-efi --prefix='/EFI/boot' \
 	normal configfile chain loopback halt \
 	efifwsetup efi_gop efi_uga \
 	part_gpt part_msdos fat ext2 \
-	linux linuxefi boot \
+	linux boot \
 	ls search search_label search_fs_uuid search_fs_file \
 	gfxterm gfxterm_background gfxterm_menu test all_video loadenv
 
