@@ -5,16 +5,23 @@ export OS_ARCH?=i386
 ## Configuration
 
 ifeq (${OS_DISTRIBUTION},debian)
-export OS_SUITE?=bookworm
+ifeq (${OS_SUITE},bookworm)
+DEBIAN_SNAPSHOT_TS=20230610T205311Z
+OS_MIRROR=https://snapshot.debian.org/archive/debian/${DEBIAN_SNAPSHOT_TS}
+DEBIAN_DEBOOTSTRAP_VER=1.0.128+nmu2
+DEBIAN_KEYRING_VER=2023.3
+endif
+
+export OS_SUITE?=trixie
 export OS_MIRROR?=http://ftp.uk.debian.org/debian/
 
-DEBIAN_DEBOOTSTRAP_VER=1.0.124
+DEBIAN_DEBOOTSTRAP_VER?=1.0.141
 DEBIAN_DEBOOTSTRAP_TARBALL=${DOWNLOAD_DIR}/debootstrap_${DEBIAN_DEBOOTSTRAP_VER}.tar.gz
-DEBIAN_DEBOOTSTRAP_URL=https://snapshot.debian.org/archive/debian/20210814T212851Z/pool/main/d/debootstrap/$(notdir ${DEBIAN_DEBOOTSTRAP_TARBALL})
+DEBIAN_DEBOOTSTRAP_URL=${OS_MIRROR}/pool/main/d/debootstrap/$(notdir ${DEBIAN_DEBOOTSTRAP_TARBALL})
 
-DEBIAN_KEYRING_VER=2021.1.1
+DEBIAN_KEYRING_VER?=2025.1
 DEBIAN_KEYRING_PACKAGE=${DOWNLOAD_DIR}/debian-archive-keyring_${DEBIAN_KEYRING_VER}_all.deb
-DEBIAN_KEYRING_URL=https://snapshot.debian.org/archive/debian/20210814T212851Z/pool/main/d/debian-archive-keyring/$(notdir ${DEBIAN_KEYRING_PACKAGE})
+DEBIAN_KEYRING_URL=${OS_MIRROR}/pool/main/d/debian-archive-keyring/$(notdir ${DEBIAN_KEYRING_PACKAGE})
 
 
 DOWNLOAD_TARGETS+= ${DEBIAN_DEBOOTSTRAP_TARBALL}
